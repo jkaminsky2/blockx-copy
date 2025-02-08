@@ -13,10 +13,6 @@ This repo contains the back-end code for a decentralized application (dapp), spe
 
 #### Getting Started
 
-Download the following google chrome extension: https://chromewebstore.google.com/detail/allow-cors-access-control/lhobafahddgcelffkeicbaginigeejlf
-
-Currently download dataset function doesn't work due to being blocked by Cors policy. We can work around this by downloading and turning on this extension. We plan to find a better fix for this issue next quarter to this issue.
-
 go to [data-x-delta.vercel.app](https://data-x-delta.vercel.app)
 
 

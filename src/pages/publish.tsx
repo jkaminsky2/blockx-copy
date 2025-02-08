@@ -49,7 +49,7 @@ const PublishDatasetPage = () => {
     if (!signer) {
       toast({
         title: "Wallet not connected.",
-        description: "Please connect your wallet first.",
+        description: "Please connect your wallet first!",
         status: "error",
         duration: 3000,
         isClosable: true,
