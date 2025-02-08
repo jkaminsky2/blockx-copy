@@ -52,7 +52,9 @@ const MyListedDatasets = () => {
         setLoading(true);
         // Request account access.
         await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.providers.Web3Provider(
+          window.ethereum as unknown as ethers.providers.ExternalProvider
+        );
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         setUserAddress(address);

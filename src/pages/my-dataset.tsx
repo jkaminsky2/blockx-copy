@@ -71,7 +71,10 @@ const MyDatasets = () => {
 
         // Request account access if needed.
         await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.providers.Web3Provider(
+          window.ethereum as unknown as ethers.providers.ExternalProvider
+        );
+        
         const signer = provider.getSigner();
         const address = await signer.getAddress();
         setUserAddress(address);
@@ -156,7 +159,9 @@ const MyDatasets = () => {
     try {
       if (!window.ethereum) throw new Error('Please install MetaMask');
       await window.ethereum.request({ method: 'eth_requestAccounts' });
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const provider = new ethers.providers.Web3Provider(
+        window.ethereum as unknown as ethers.providers.ExternalProvider
+      );
       const signer = provider.getSigner();
       const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
       const tx = await contract.confirmDelivery(listingId);

@@ -120,7 +120,9 @@ const handleBuyDataset = async (listingId: number, priceInEth: string) => {
 
     // Connect to MetaMask.
     await window.ethereum.request({ method: 'eth_requestAccounts' });
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const provider = new ethers.providers.Web3Provider(
+      window.ethereum as unknown as ethers.providers.ExternalProvider
+    );
     const signer = provider.getSigner();
     const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
 
@@ -304,7 +306,9 @@ const DatasetCard = ({
       }
       try {
         await window.ethereum.request({ method: 'eth_requestAccounts' });
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.providers.Web3Provider(
+          window.ethereum as unknown as ethers.providers.ExternalProvider
+        );
         const signer = provider.getSigner();
         const contract = new ethers.Contract(
           CONTRACT_ADDRESS,

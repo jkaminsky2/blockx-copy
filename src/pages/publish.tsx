@@ -16,7 +16,7 @@ import { useAccount, useSigner } from "wagmi";
 import { PinataSDK } from "pinata";
 import abi from "../abis/ddm.json"; // Adjust to your ABI file path
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
+const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
 const PublishDatasetPage = () => {
   const [name, setName] = useState<string>("");
