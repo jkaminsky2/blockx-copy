@@ -120,13 +120,13 @@ const Home: NextPage = () => {
 
             <div className={styles.card}>
               <p>Data Description</p>
-              <h3>Fill out relevant information regarding the data and click "Sell Dataset". A more thorough description is likely to lead to more purchases.</h3>
+              <h3>Fill out relevant information regarding the data and click &quot;Sell Dataset&quot;. A more thorough description is likely to lead to more purchases.</h3>
               <Image src={sell_info_img} alt="dataset info" width={350} height={250} />
             </div>
 
             <div className={styles.card}>
               <p>Backend Smart Contract Execution</p>
-              <h3>To add the data to the marketplace, execute the smart contract by clicking on the blue "Confirm" button. Before the data is added to the marketplace, however, a couple of steps need to occur.</h3>
+              <h3>To add the data to the marketplace, execute the smart contract by clicking on the blue &quot;Confirm&quot; button.</h3>
               <Image src={fee_img} alt="Smart contract execute" width={350} height={220} />
               
             </div>
