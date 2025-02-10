@@ -93,6 +93,56 @@ const Home: NextPage = () => {
             <Image src={fee_img} alt="Smart contract execute" width={350} height={220} />
           </div>
         </div>
+        <div id="sellText" className={styles.targetText}>
+          <p className={styles.header}>Sell Data</p>
+          
+          <div className={styles.buttonContainer}>
+            <button className={styles.button}>Text Version</button>
+          </div>
+        </div>
+        <br></br>
+
+        <div className={styles.card}>
+              <p>Navigate to the <a href="https://data-x-delta.vercel.app/publish">Publish</a> page</p>
+              <Image src={publish_img} alt="publish" width={500} height={40} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Data Description</p>
+              <h3>Fill out relevant information regarding the data and click "Sell Dataset". A more thorough description is likely to lead to more purchases.</h3>
+              <Image src={sell_info_img} alt="dataset info" width={350} height={250} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Backend Smart Contract Execution</p>
+              <h3>To add the data to the marketplace, execute the smart contract by clicking on the blue "Confirm" button. Before the data is added to the marketplace, however, a couple of steps need to occur.</h3>
+              <Image src={fee_img} alt="Smart contract execute" width={350} height={220} />
+              
+            </div>
+
+            <div className={styles.card}>
+              <p>Personally Identifiable Information (PII) check</p>
+              <h3>The Personally Identifiable Information (PII) check ensures privacy by removing sensitive data. Note that it is your responsibility to remvoe PII--this is only a surface-level check.</h3>
+              <Image src={pii_img} alt="PII check" width={350} height={250} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Data Storage: Interplanetary File System (IPFS)</p>
+              <h3>The data is then stored in chunks on Interplanetary File System (IPFS); this prevents your data from a total data leak, which is a main issue associated with centralized storage.</h3>
+              <Image src={ipfs_img} alt="IPFS chunking" width={350} height={150} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Dataset Identifier Creation</p>
+              <h3>After the PII check and upload to IPFS, a Content Identifier (CID) is created for your data. Tt is then passed into the smart contract; the smart contract is executed and the data is added to the blockchain.</h3>
+              <Image src={solo_sc_img} alt="smart contract execution" width={350} height={150} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Now your data should be available to purchase on the <a href="https://data-x-delta.vercel.app/catalog">Catalog</a>.</p>
+              <Image src={sell_img} alt="Your data on the catalog" width={270} height={100} />
+      
+            </div>
       </main>
 
       {/* Footer */}
