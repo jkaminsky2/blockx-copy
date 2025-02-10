@@ -20,7 +20,7 @@ import sell_img from "../assets/ads_result.png";
 import solo_sc_img from "../assets/solo_sc.jpeg";
 
 const Home: NextPage = () => {
-  const { address, isConnected } = useAccount();
+  const { address, isConnected } = useAccount(); // Get the connected address
 
   return (
     <div className={styles.container}>
@@ -30,15 +30,20 @@ const Home: NextPage = () => {
       </Head>
 
       <h1 className={styles.title}>
-        Welcome to <a href="https://github.com/gchongg/blockX">BlockX</a>
+        Welcome to{" "}
+        <a href="https://github.com/gchongg/blockx">
+          BlockX
+        </a>
       </h1>
 
       <main className={styles.main}>
         <p className={styles.smalltext}>
-          An innovative, blockchain-powered solution for exchanging data and code
+        An innovative, blockchain-powered solution for exchanging data and code
         </p>
 
-        <p className={styles.header}>How does it work?</p>
+        <p className={styles.header}>
+          How does it work?
+        </p>
 
         <div className={styles.buttonContainer}>
           <a href="#buyText" className={styles.button}>
@@ -55,44 +60,50 @@ const Home: NextPage = () => {
             <button className={styles.button}>Text Version</button>
           </div>
         </div>
-        <br />
+        <br></br>
+
 
         <div className="card-container">
-          <div className={styles.card}>
-            <p>
-              Navigate to the <a href="https://data-x-delta.vercel.app/catalog">Catalog</a>
-            </p>
-            <header>
-              This contains every dataset part of the marketplace; this is paired with a description and the price of the dataset.
-            </header>
-            <Image src={catalog_img} alt="Catalog" width={500} height={40} />
-            <Image src={datasets_img} alt="datasets" width={250} height={200} />
-          </div>
+          
+            <div className={styles.card}>
+              <p>Navigate to the <a href="https://data-x-delta.vercel.app/catalog">Catalog</a></p>
+              <header>This contains every dataset part of the marketplace; this is paired with a description and the price of the dataset.</header>
+              <Image src={catalog_img} alt="Catalog" width={500} height={40} />
+              <Image src={datasets_img} alt="datasets" width={250} height={200} />
+            </div>
 
-          <div className={styles.card}>
-            <p>Backend blockchain querying</p>
-            <h3>
-              Backend blockchain querying occurs to get all dataset offerings within the marketplace.
-            </h3>
-            <Image src={backend_img} alt="backend query" width={170} height={250} />
-          </div>
+            <div className={styles.card}>
+              <p>Backend blockchain querying</p>
+              <h3>Backend blockchain querying occurs to get all dataset offerings within the marketplace.</h3>
+              <Image src={backend_img} alt="backend query" width={170} height={250} />
+            </div>
 
-          <div className={styles.card}>
-            <p>Data Description</p>
-            <h3>
-              Fill out relevant information regarding the data and click &quot;Sell Dataset&quot;. A more thorough description is likely to lead to more purchases.
-            </h3>
-            <Image src={sell_info_img} alt="dataset info" width={350} height={250} />
-          </div>
+            <div className={styles.card}>
+              <p>Filters</p>
+              <h3>Filter based on what you are looking for; filters include text search, price, category, and more!</h3>
+              <Image src={filters_img} alt="Filters" width={350} height={250} />
+            </div>
 
-          <div className={styles.card}>
-            <p>Backend Smart Contract Execution</p>
-            <h3>
-              To add the data to the marketplace, execute the smart contract by clicking on the blue &quot;Confirm&quot; button. Before the data is added to the marketplace, however, a couple of steps need to occur.
-            </h3>
-            <Image src={fee_img} alt="Smart contract execute" width={350} height={220} />
-          </div>
+            <div className={styles.card}>
+              <p>Buy Data</p>
+              <h3>Once you have located a dataset of interest, buy the dataset for the listed price.</h3>
+              <Image src={buying_data_img} alt="Purchase" width={270} height={150} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Backend Smart Contract Execution</p>
+              <h3>A smart contract is executed to give Ether to the dataset owner and give you access the dataset.</h3>
+              <Image src={buy_img} alt="smart contract" width={270} height={150} />
+            </div>
+
+            <div className={styles.card}>
+              <p>Access your new data</p>
+              <h3>Once the smart contract is executed, a signed URL will be created for you to access your purchased data.</h3>
+              
+            </div>
+
         </div>
+
         <div id="sellText" className={styles.targetText}>
           <p className={styles.header}>Sell Data</p>
           
@@ -147,13 +158,20 @@ const Home: NextPage = () => {
 
       {/* Footer */}
       {!isConnected && (
-        <footer className={styles.footer}>
-          {/* Wallet Connect Button */}
-          <div className={styles.connectButton}>
-            <ConnectButton />
-          </div>
-        </footer>
-      )}
+  <footer className={styles.footer}>
+    {/* Wallet Connect Button */}
+    <div className={styles.connectButton}>
+      <ConnectButton />
+    </div>
+
+    {/* Display Connected Address */}
+    {isConnected && (
+      <p className={styles.address}>
+        yer
+      </p>
+    )}
+  </footer>
+)}
     </div>
   );
 };
