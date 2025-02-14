@@ -15,6 +15,7 @@ import {
 import { ethers } from 'ethers';
 import { PinataSDK } from 'pinata';
 import abi from '../abis/ddm.json';
+import { useLitDecryption } from '../hooks/useLitDecryption'; // Add Lit decryption hook
 
 // Get contract and network settings from environment variables.
 const CONTRACT_ADDRESS = ethers.utils.getAddress(
@@ -58,6 +59,7 @@ const MyDatasets = () => {
   const [error, setError] = useState('');
   const [userAddress, setUserAddress] = useState('');
   const toast = useToast();
+  const { decryptData } = useLitDecryption(); // Add Lit decryption
 
   // On component mount, connect to the wallet and fetch the user’s purchases.
   useEffect(() => {
@@ -127,25 +129,43 @@ const MyDatasets = () => {
   // Function to download a dataset file using your API proxy (to avoid CORS issues).
   const downloadDataset = async (dataHash: string) => {
     try {
-      if (!dataHash) throw new Error('Data hash cannot be empty');
-      const response = await fetch(`/api/download?hash=${dataHash}`);
+      const decryptedCid = await decryptData(dataHash);
+      const response = await fetch(`/api/download?hash=${decryptedCid}`);
+      
       if (!response.ok) {
         throw new Error('Failed to fetch dataset from server.');
       }
+
+      // Extract filename from headers
+      const contentDisposition = response.headers.get('content-disposition');
+      let filename = 'dataset';
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="(.+)"/);
+        if (filenameMatch?.[1]) filename = filenameMatch[1];
+      }
+
       const blob = await response.blob();
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'dataset'; // Adjust the filename if needed.
+      a.download = filename;
       document.body.appendChild(a);
       a.click();
       a.remove();
       URL.revokeObjectURL(url);
+
+      toast({
+        title: 'Download Successful',
+        description: 'Dataset downloaded successfully!',
+        status: 'success',
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error: any) {
       console.error('Error downloading dataset:', error);
       toast({
         title: 'Download Failed',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'Could not download dataset',
         status: 'error',
         duration: 5000,
         isClosable: true,

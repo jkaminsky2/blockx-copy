@@ -16,6 +16,12 @@ import { useAccount, useSigner } from "wagmi";
 import { PinataSDK } from "pinata";
 import abi from "../abis/ddm.json"; // Adjust to your ABI file path
 
+// Import Lit Protocol functions and client
+import { encryptString } from "@lit-protocol/encryption";
+import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
+import { LIT_NETWORK } from "@lit-protocol/constants";
+import { AccessControlConditions } from "@lit-protocol/types";
+
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
 
 const PublishDatasetPage = () => {
@@ -44,7 +50,7 @@ const PublishDatasetPage = () => {
     }
   };
 
-  // Sell Dataset: Upload File to IPFS and Publish to Blockchain
+  // Sell Dataset: Upload File to IPFS, Encrypt the CID, and Publish to Blockchain
   const sellDataset = async () => {
     if (!signer) {
       toast({
@@ -71,9 +77,11 @@ const PublishDatasetPage = () => {
     try {
       setIsPublishing(true);
 
-      // Step 1: Upload file to IPFS
+      // Step 1: Upload file to IPFS via Pinata
       const blob = new Blob([file], { type: file.type });
-      const upload = await pinata.upload.file(new File([blob], file.name, { type: file.type }));
+      const upload = await pinata.upload.file(
+        new File([blob], file.name, { type: file.type })
+      );
       const ipfsHash = upload.cid;
 
       toast({
@@ -84,12 +92,75 @@ const PublishDatasetPage = () => {
         isClosable: true,
       });
 
-      // Step 2: Publish dataset details to the blockchain
-      const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
-      const priceInWei = ethers.utils.parseEther(price); 
-      // todo: fix price in wei
+      // Step 2: Encrypt the CID using Lit Protocol
+      // Configure the chain (adjust if needed)
+      const chain = "sepolia"; 
+      
+      // Initialize the Lit Node Client
+      const litNodeClient = new LitNodeClientNodeJs({
+        litNetwork: LIT_NETWORK.DatilDev, // or your chosen Lit network
+        alertWhenUnauthorized: false,
+      });
+      await litNodeClient.connect();
 
-      const tx = await contract.createListing(name, priceInWei,description, ipfsHash);
+      // Define access control conditions.
+      // In this demo, we use a simple condition so that any wallet (with ETH) can decrypt.
+      // You can adjust this condition to better match your marketplace logic.
+      const accessControlConditions: AccessControlConditions = [
+        {
+          contractAddress: "",
+          standardContractType: "",
+          chain: "sepolia" as "sepolia", // Type assertion here
+          method: "eth_getBalance",
+          parameters: [":userAddress", "latest"],
+          returnValueTest: {
+            comparator: ">=",
+            value: "0",
+          },
+        },
+      ];
+
+      // Encrypt the IPFS CID.
+      // The encryptString function returns an object containing ciphertext and a dataToEncryptHash.
+      const { ciphertext, dataToEncryptHash } = await encryptString(
+        {
+          accessControlConditions,
+          dataToEncrypt: ipfsHash,
+        },
+        litNodeClient
+      );
+      
+
+      // Disconnect from Lit Node Client when done
+      await litNodeClient.disconnect();
+
+      // Prepare the encrypted payload.
+      // You may store this JSON string on-chain and later use it to decrypt the CID.
+      const encryptedCidPayload = JSON.stringify({
+        ciphertext,
+        dataToEncryptHash,
+        accessControlConditions,
+      });
+
+      toast({
+        title: "CID encrypted.",
+        description: "Your IPFS CID has been encrypted before storing on-chain.",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
+
+      // Step 3: Publish dataset details (including encrypted CID) to the blockchain
+      const contract = new ethers.Contract(CONTRACT_ADDRESS, abi, signer);
+      const priceInWei = ethers.utils.parseEther(price);
+
+      // We now pass encryptedCidPayload instead of the plain ipfsHash.
+      const tx = await contract.createListing(
+        name,
+        priceInWei,
+        description,
+        encryptedCidPayload
+      );
       toast({
         title: "Transaction submitted.",
         description: "Waiting for confirmation...",

@@ -16,6 +16,7 @@ const { chains, provider } = configureChains(NETWORKS, [infuraProvider({ apiKey:
 
 const { connectors } = getDefaultWallets({
   appName: SITE_NAME,
+  projectId: "9d18c333ea1dabd3a52a8a2bdb8f2e58", 
   chains,
 })
 
