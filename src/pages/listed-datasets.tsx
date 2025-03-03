@@ -13,9 +13,10 @@ import {
 import abi from '../abis/ddm.json';
 
 // Make sure your environment variables are set.
-const CONTRACT_ADDRESS = ethers.utils.getAddress(
-  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!
-);
+//const CONTRACT_ADDRESS = ethers.utils.getAddress(
+//  process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!
+//);
+const CONTRACT_ADDRESS = "0xe289f74060C5cdeD218Ee16B9Ee7DeFD9fE91Ab0";
 const ALCHEMY_API_URL = process.env.NEXT_PUBLIC_ALCHEMY_API_URL!;
 
 // Type for a listing as defined in the contract.

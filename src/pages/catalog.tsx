@@ -21,7 +21,8 @@ import usePurchaseStatus from '../hooks/usePurchaseStatus';
 import { useLitDecryption } from '../hooks/useLitDecryption';
 import abi from '../abis/ddm.json';
 
-const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+//const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+const CONTRACT_ADDRESS = "0xe289f74060C5cdeD218Ee16B9Ee7DeFD9fE91Ab0";
 const ALCHEMY_API_URL = process.env.NEXT_PUBLIC_ALCHEMY_API_URL!;
 const ITEMS_PER_PAGE = 10;
 

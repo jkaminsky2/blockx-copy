@@ -67,9 +67,10 @@ export function Header(props: Props) {
         >
           <Logo />
         </Link>
-        <Flex display={{ base: "none", md: "flex" }} ml={10}>
+        <Flex display={{ base: "none", md: "flex" }} style={{ marginLeft: "50px" }}>
           <DesktopNav />
         </Flex>
+
       </Flex>
 
       <Spacer />
@@ -105,23 +106,31 @@ const DesktopNav = () => {
         <Box key={navItem.label}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
-              <Link
-                p={2}
-                href={navItem.href ?? "#"}
-                fontSize={"md"}
-                fontWeight={500}
-                color={linkColor}
-                rounded={"md"}
-                _hover={{
-                  textDecoration: "none",
-                  color: linkHoverColor,
-                  bg: linkHoverBackgroundColor,
-                }}
-              >
-                <Text as="samp">
-                  <Text as="b">{navItem.label}</Text>
-                </Text>
-              </Link>
+            <Link
+              p={1.5}
+              textAlign="center"
+              whiteSpace="nowrap"
+              href={navItem.href ?? "#"}
+              fontSize={"md"}
+              fontWeight={500}
+              color={linkColor}
+              rounded={"md"}
+              display="flex"
+              alignItems="center"
+              justifyContent="center"
+              paddingTop="4px" // Adjust this value as needed to move text down
+              _hover={{
+                textDecoration: "none",
+                color: linkHoverColor,
+                bg: linkHoverBackgroundColor,
+              }}
+            >
+              <Text as="samp">
+                <Text as="b">{navItem.label}</Text>
+              </Text>
+            </Link>
+
+
             </PopoverTrigger>
             {navItem.children && (
               <PopoverContent
@@ -255,11 +264,6 @@ const NAV_ITEMS: Array<NavItem> = [
     label: "Home",
     href: "/",
     children: [
-      {
-        label: 'Explore Decentralized Finance',
-        subLabel: 'Trending DeFi Apps to inspire you',
-        href: 'https://dappradar.com/rankings/category/defi',
-      },
       {
         label: 'View wallet balance',
         subLabel: 'View your wallet full balance',
