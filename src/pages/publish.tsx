@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
-import pako from "pako";
+import * as pako from "pako";
+
 
 import {
   Box,
