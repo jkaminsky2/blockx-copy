@@ -24,7 +24,7 @@ import { LitNodeClientNodeJs } from "@lit-protocol/lit-node-client-nodejs";
 import { LIT_NETWORK } from "@lit-protocol/constants";
 import { AccessControlConditions } from "@lit-protocol/types";
 
-//const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+
 const CONTRACT_ADDRESS = "0xe289f74060C5cdeD218Ee16B9Ee7DeFD9fE91Ab0";
 
 const PublishDatasetPage = () => {
