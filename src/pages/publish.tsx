@@ -183,11 +183,17 @@ const PublishDatasetPage = () => {
       const headers = rows[0].split(",").map((header) => header.trim());
       const jsonData = rows.slice(1).map((row) => {
         const values = row.split(",").map((value) => value.trim());
+      
+        // Define the accumulator type explicitly
+        const acc: Record<string, string | undefined> = {};
+      
         return headers.reduce((acc, header, index) => {
-          acc[header] = values[index];
+          acc[header] = values[index]; // No type error now
           return acc;
-        }, {});
+        }, acc); // Pass the pre-typed object
       });
+      
+      
       
       // Compress JSON data using pako.gzip
       const compressedData = pako.gzip(JSON.stringify({ fileName: file.name, fileContent: jsonData }));
