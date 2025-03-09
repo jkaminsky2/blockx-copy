@@ -23,6 +23,7 @@ import { LIT_NETWORK } from "@lit-protocol/constants";
 import { AccessControlConditions } from "@lit-protocol/types";
 
 const CONTRACT_ADDRESS = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS!;
+console.log(1);
 
 const PublishDatasetPage = () => {
   const [name, setName] = useState<string>("");
